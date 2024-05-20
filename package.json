@@ -1,5 +1,5 @@
 {
-    "name": "vesktop",
+    "name": "vesktop-fix",
     "version": "1.5.2",
     "private": true,
     "description": "",
@@ -55,7 +55,7 @@
         "typescript": "^5.4.2",
         "xml-formatter": "^3.6.2"
     },
-    "packageManager": "pnpm@9.1.0",
+    "packageManager": "pnpm@9.1.1",
     "engines": {
         "node": ">=18",
         "pnpm": ">=8"
@@ -139,18 +139,17 @@
                 "width": 512,
                 "height": 340
             },
-            "contents": [
-                {
-                    "x": 140,
-                    "y": 160
-                },
-                {
-                    "x": 372,
-                    "y": 160,
-                    "type": "link",
-                    "path": "/Applications"
-                }
-            ]
+
+            "contents": [{
+                "x": 140,
+                "y": 160
+            },
+            {
+                "x": 372,
+                "y": 160,
+                "type": "link",
+                "path": "/Applications"
+            }]
         },
         "nsis": {
             "include": "build/installer.nsh",
