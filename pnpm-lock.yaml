@@ -14,7 +14,6 @@ importers:
     optionalDependencies:
       '@vencord/venmic':
         specifier: ^3.4.2
-        version: 3.4.2
         version: 3.4.4
     devDependencies:
       '@fal-works/esbuild-plugin-global-externals':
@@ -24,7 +23,7 @@ importers:
         specifier: ^20.11.26
         version: 20.12.12
       '@types/react':
-        specifier: ^18.2.65
+        specifier: ^18.2.0
         version: 18.3.2
       '@typescript-eslint/eslint-plugin':
         specifier: ^7.2.0
@@ -33,8 +32,8 @@ importers:
         specifier: ^7.2.0
         version: 7.9.0(eslint@8.57.0)(typescript@5.4.5)
       '@vencord/types':
-        specifier: ^0.1.2
-        version: 0.1.2
+        specifier: ^1.8.4
+        version: 1.8.4
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -450,8 +449,8 @@ packages:
   '@ungap/structured-clone@1.2.0':
     resolution: {integrity: sha512-zuVdFrMJiuCDQUMCzQaD6KL28MjnqqN8XnAqiEq9PNm/hCPTSGfrXCOfwj1ow4LFb/tNymJPwsNbVePc1xFqrQ==}
 
-  '@vencord/types@0.1.2':
-    resolution: {integrity: sha512-C/dqZHn3aod/4izZT9sgZEef4478M7QNKTY8Gx2yB1CRYawJcs6hupXT/1SMmepKqrULbltL04Cnh5ieBm3Ucw==}
+  '@vencord/types@1.8.4':
+    resolution: {integrity: sha512-ogLqIOHVO+5zxKUVxAfGIAUZoEfIomrlg6f0cZ/2yd5vBAn1fA9Gi/NASoKfHZuJt8ZcYw329bgn0ah/VufqMg==}
 
   '@vencord/venmic@3.4.4':
     resolution: {integrity: sha512-ZQbwubajbFpXcztcPlFsm80OCtKPl1Innf9bY25Zrsw4vc8d0ZrDWEBSjYPV4RKTexJHdIFDz6cAMEtBVoGXGQ==}
@@ -2799,7 +2798,7 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vencord/types@0.1.2':
+  '@vencord/types@1.8.4':
     dependencies:
       '@types/lodash': 4.17.4
       '@types/node': 18.19.33
