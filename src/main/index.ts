@@ -33,12 +33,22 @@ function init() {
     if (hardwareAcceleration === false) {
         app.disableHardwareAcceleration();
     } else {
-        enabledFeatures.push("VaapiVideoDecodeLinuxGL", "VaapiVideoEncoder", "VaapiVideoDecoder");
+        enabledFeatures.push("VaapiVideoDecodeLinuxGL", "VaapiVideoEncoder", "VaapiVP8Encoder", "VaapiVP9Encoder", "VaapiAV1Encoder", "RawDraw");
+        app.commandLine.appendSwitch("ignore-gpu-blocklist");
+        app.commandLine.appendSwitch("disable-gpu-vsync");
+        app.commandLine.appendSwitch("enable-gpu-rasterization");
     }
 
     if (disableSmoothScroll) {
         app.commandLine.appendSwitch("disable-smooth-scrolling");
     }
+
+    // some sane flags
+    app.commandLine.appendSwitch("use-gl", "angle");
+    app.commandLine.appendSwitch("use-angle", "gl");
+    app.commandLine.appendSwitch("ozone-platform", "x11");
+    app.commandLine.appendSwitch("enable-zero-copy");
+    app.commandLine.appendSwitch("enable-unsafe-webgpu");
 
     // disable renderer backgrounding to prevent the app from unloading when in the background
     // https://github.com/electron/electron/issues/2822
