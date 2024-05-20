@@ -73,9 +73,9 @@ addPatch({
         const width = Math.round(height * (16 / 9));
 
         Object.assign(opts, {
-            bitrateMin: 500000,
-            bitrateMax: 8000000,
-            bitrateTarget: 600000
+            bitrateMin: 1000000,
+            bitrateMax: 25000000,
+            bitrateTarget: 15000000
         });
         if (opts?.encode) {
             Object.assign(opts.encode, {
@@ -421,7 +421,7 @@ function ModalComponent({
 }) {
     const [selected, setSelected] = useState<string | undefined>(skipPicker ? screens[0].id : void 0);
     const [settings, setSettings] = useState<StreamSettings>({
-        resolution: "1080",
+        resolution: "720",
         fps: "60",
         contentHint: "motion",
         audio: true
@@ -481,8 +481,8 @@ function ModalComponent({
                                 const constraints = {
                                     ...track.getConstraints(),
                                     frameRate,
-                                    width: { min: 640, ideal: width, max: width },
-                                    height: { min: 480, ideal: height, max: height },
+                                    width: { min: width, ideal: width, max: width },
+                                    height: { min: height, ideal: height, max: height },
                                     advanced: [{ width: width, height: height }],
                                     resizeMode: "none"
                                 };
