@@ -29,7 +29,7 @@
 .vcd-screen-picker-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2em 1em;
+
 }
 
 .vcd-screen-picker-grid input {
@@ -46,6 +46,7 @@
     overflow: hidden;
     padding: 4px 0px;
     cursor: pointer;
+    margin: auto
 }
 
 .vcd-screen-picker-grid label:hover {

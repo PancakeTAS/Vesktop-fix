@@ -35,7 +35,6 @@ interface StreamSettings {
     resolution: StreamResolution;
     fps: StreamFps;
     audio: boolean;
-    audioSource?: string;
     contentHint?: string;
     workaround?: boolean;
     onlyDefaultSpeakers?: boolean;
@@ -118,13 +117,7 @@ export function openScreenSharePicker(screens: Source[], skipPicker: boolean) {
                     modalProps={props}
                     submit={async v => {
                         didSubmit = true;
-                        if (v.audioSource && v.audioSource !== "None") {
-                            if (v.audioSource === "Entire System") {
-                                await VesktopNative.virtmic.startSystem(v.workaround);
-                            } else {
-                                await VesktopNative.virtmic.start([v.audioSource], v.workaround);
-                            }
-                        }
+                        if (v.audio) await VesktopNative.virtmic.start(["stub :3"], v.workaround);
                         resolve(v);
                     }}
                     close={() => {
@@ -179,14 +172,14 @@ function StreamSettings({
     );
 
     return (
-        <div className={isLinux ? "vcd-screen-picker-settings-grid" : ""}>
+        <div className={""}>
             <div>
                 <Forms.FormTitle>What you're streaming</Forms.FormTitle>
                 <Card className="vcd-screen-picker-card vcd-screen-picker-preview">
                     <img
                         src={thumb}
                         alt=""
-                        className={isLinux ? "vcd-screen-picker-preview-img-linux" : "vcd-screen-picker-preview-img"}
+                        className={"vcd-screen-picker-preview-img"}
                     />
                     <Text variant="text-sm/normal">{source.name}</Text>
                 </Card>
@@ -273,136 +266,19 @@ function StreamSettings({
                                     </p>
                                 </div>
                             </div>
-                            {isWindows && (
-                                <Switch
-                                    value={settings.audio}
-                                    onChange={checked => setSettings(s => ({ ...s, audio: checked }))}
-                                    hideBorder
-                                    className="vcd-screen-picker-audio"
-                                >
-                                    Stream With Audio
-                                </Switch>
-                            )}
+                            <Switch
+                                value={settings.audio}
+                                onChange={checked => setSettings(s => ({ ...s, audio: checked }))}
+                                hideBorder
+                                className="vcd-screen-picker-audio"
+                            >
+                                Stream With Audio
+                            </Switch>
                         </section>
                     </div>
                 </Card>
             </div>
-
-            <div>
-                {isLinux && (
-                    <AudioSourcePickerLinux
-                        audioSource={settings.audioSource}
-                        workaround={settings.workaround}
-                        onlyDefaultSpeakers={settings.onlyDefaultSpeakers}
-                        setAudioSource={source => setSettings(s => ({ ...s, audioSource: source }))}
-                        setWorkaround={value => setSettings(s => ({ ...s, workaround: value }))}
-                        setOnlyDefaultSpeakers={value => setSettings(s => ({ ...s, onlyDefaultSpeakers: value }))}
-                    />
-                )}
-            </div>
         </div>
-    );
-}
-
-function AudioSourcePickerLinux({
-    audioSource,
-    workaround,
-    onlyDefaultSpeakers,
-    setAudioSource,
-    setWorkaround,
-    setOnlyDefaultSpeakers
-}: {
-    audioSource?: string;
-    workaround?: boolean;
-    onlyDefaultSpeakers?: boolean;
-    setAudioSource(s: string): void;
-    setWorkaround(b: boolean): void;
-    setOnlyDefaultSpeakers(b: boolean): void;
-}) {
-    const [sources, _, loading] = useAwaiter(() => VesktopNative.virtmic.list(), {
-        fallbackValue: { ok: true, targets: [], hasPipewirePulse: true }
-    });
-
-    const allSources = sources.ok ? ["None", "Entire System", ...sources.targets] : null;
-    const hasPipewirePulse = sources.ok ? sources.hasPipewirePulse : true;
-
-    const [ignorePulseWarning, setIgnorePulseWarning] = useState(false);
-
-    return (
-        <>
-            <Forms.FormTitle>Audio Settings</Forms.FormTitle>
-            <Card className="vcd-screen-picker-card">
-                {loading ? (
-                    <Forms.FormTitle>Loading Audio Sources...</Forms.FormTitle>
-                ) : (
-                    <Forms.FormTitle>Audio Source</Forms.FormTitle>
-                )}
-
-                {!sources.ok && sources.isGlibCxxOutdated && (
-                    <Forms.FormText>
-                        Failed to retrieve Audio Sources because your C++ library is too old to run
-                        <a href="https://github.com/Vencord/venmic" target="_blank">
-                            venmic
-                        </a>
-                        . See{" "}
-                        <a href="https://gist.github.com/Vendicated/b655044ffbb16b2716095a448c6d827a" target="_blank">
-                            this guide
-                        </a>{" "}
-                        for possible solutions.
-                    </Forms.FormText>
-                )}
-
-                {hasPipewirePulse || ignorePulseWarning ? (
-                    allSources && (
-                        <Select
-                            options={allSources.map(s => ({ label: s, value: s, default: s === "None" }))}
-                            isSelected={s => s === audioSource}
-                            select={setAudioSource}
-                            serialize={String}
-                        />
-                    )
-                ) : (
-                    <Text variant="text-sm/normal">
-                        Could not find pipewire-pulse. This usually means that you do not run pipewire as your main
-                        audio-server. <br />
-                        You can still continue, however, please beware that you can only share audio of apps that are
-                        running under pipewire.
-                        <br />
-                        <a onClick={() => setIgnorePulseWarning(true)}>I know what I'm doing</a>
-                    </Text>
-                )}
-
-                <Forms.FormDivider className={Margins.top16 + " " + Margins.bottom16} />
-
-                <Switch
-                    onChange={setWorkaround}
-                    value={workaround ?? false}
-                    note={
-                        <>
-                            Work around an issue that causes the microphone to be shared instead of the correct audio.
-                            Only enable if you're experiencing this issue.
-                        </>
-                    }
-                >
-                    Microphone Workaround
-                </Switch>
-
-                <Switch
-                    hideBorder
-                    onChange={setOnlyDefaultSpeakers}
-                    disabled={audioSource !== "Entire System"}
-                    value={onlyDefaultSpeakers ?? true}
-                    note={
-                        <>
-                            When sharing entire desktop audio, only share apps that play to the default speakers and
-                            ignore apps that play to other speakers or devices.
-                        </>
-                    }
-                >
-                    Only Default Speakers
-                </Switch>
-            </Card>
-        </>
     );
 }
 
