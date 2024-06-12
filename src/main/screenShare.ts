@@ -30,7 +30,7 @@ export function registerScreenShareHandler() {
         const width = isWayland ? 1920 : 176;
         const sources = await desktopCapturer
             .getSources({
-                types: ["window", "screen"],
+                types: ["window"],
                 thumbnailSize: {
                     width,
                     height: width * (9 / 16)
@@ -45,6 +45,10 @@ export function registerScreenShareHandler() {
             name,
             url: thumbnail.toDataURL()
         }));
+
+        data.forEach(e => {
+            e.name = e.name.length > 25 ? e.name.slice(0, 25) + "..." : e.name;
+        });
 
         if (isWayland) {
             const video = data[0];
