@@ -48,6 +48,8 @@ export function registerScreenShareHandler() {
 
         data.forEach(e => {
             e.name = e.name.length > 25 ? e.name.slice(0, 25) + "..." : e.name;
+            if (e.name.startsWith("Windowed Projector"))
+                e.name = "OBS";
         });
 
         if (isWayland) {
