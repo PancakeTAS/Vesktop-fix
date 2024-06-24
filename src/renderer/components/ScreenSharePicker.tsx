@@ -304,7 +304,7 @@ function ModalComponent({
     });
 
     return (
-        <Modals.ModalRoot {...modalProps} size={ModalSize.MEDIUM}>
+        <Modals.ModalRoot {...modalProps} className="screensharemenu" size={ModalSize.MEDIUM}>
             <Modals.ModalHeader className="vcd-screen-picker-header">
                 <Forms.FormTitle tag="h2">ScreenShare</Forms.FormTitle>
                 <Modals.ModalCloseButton onClick={close} />
