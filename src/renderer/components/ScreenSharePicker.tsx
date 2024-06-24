@@ -227,6 +227,7 @@ function StreamSettings({
                             </div>
                         </section>
                     </div>
+                    {source.name === "OBS" && (
                     <div className="vcd-screen-picker-quality">
                         <section>
                             <div>
@@ -246,8 +247,9 @@ function StreamSettings({
                                 Stream With Audio
                             </Switch>
                         </section>
-                    </div>
-                </Card>
+</div>
+                    )}
+                                    </Card>
             </div>
         </div>
     );
