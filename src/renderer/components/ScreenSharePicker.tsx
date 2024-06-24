@@ -270,7 +270,7 @@ function ModalComponent({
 }) {
     const [selected, setSelected] = useState<string | undefined>(skipPicker ? screens[0].id : void 0);
     const [settings, setSettings] = useState<StreamSettings>({
-        resolution: "720",
+        resolution: "1080",
         fps: "60",
         contentHint: "motion",
         audio: true
