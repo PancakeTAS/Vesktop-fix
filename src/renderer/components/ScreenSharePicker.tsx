@@ -228,28 +228,28 @@ function StreamSettings({
                         </section>
                     </div>
                     {source.name === "OBS" && (
-                    <div className="vcd-screen-picker-quality">
-                        <section>
-                            <div>
-                                <div className="vcd-screen-picker-radios">
+                        <div className="vcd-screen-picker-quality">
+                            <section>
+                                <div>
+                                    <div className="vcd-screen-picker-radios">
 
-                                </div>
-                                <div className="vcd-screen-picker-hint-description">
+                                    </div>
+                                    <div className="vcd-screen-picker-hint-description">
                                         <p></p>
+                                    </div>
                                 </div>
-                            </div>
-                            <Switch
-                                value={settings.audio}
-                                onChange={checked => setSettings(s => ({ ...s, audio: checked }))}
-                                hideBorder
-                                className="vcd-screen-picker-audio"
-                            >
-                                Stream With Audio
-                            </Switch>
-                        </section>
-</div>
+                                <Switch
+                                    value={settings.audio}
+                                    onChange={checked => setSettings(s => ({ ...s, audio: checked }))}
+                                    hideBorder
+                                    className="vcd-screen-picker-audio"
+                                >
+                                    Stream With Audio
+                                </Switch>
+                            </section>
+                        </div>
                     )}
-                                    </Card>
+                </Card>
             </div>
         </div>
     );
@@ -268,7 +268,9 @@ function ModalComponent({
     close: () => void;
     skipPicker: boolean;
 }) {
-    const [selected, setSelected] = useState<string | undefined>(skipPicker ? screens[0].id : void 0);
+
+    let obs = screens.find(s => s.name != null && s.name.startsWith("OBS"));
+    const [selected, setSelected] = useState<string | undefined>(obs ? obs.id : void 0);
     const [settings, setSettings] = useState<StreamSettings>({
         resolution: "1080",
         fps: "60",
