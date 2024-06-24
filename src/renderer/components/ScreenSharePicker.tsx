@@ -23,8 +23,8 @@ import type { Dispatch, SetStateAction } from "react";
 import { addPatch } from "renderer/patches/shared";
 import { isLinux, isWindows } from "renderer/utils";
 
-const StreamResolutions = ["480", "720", "1080", "1440"] as const;
-const StreamFps = ["15", "30", "60"] as const;
+const StreamResolutions = ["480", "720", "1080"] as const;
+const StreamFps = ["24", "30", "60"] as const;
 
 const MediaEngineStore = findStoreLazy("MediaEngineStore");
 
